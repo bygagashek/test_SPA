@@ -45,10 +45,7 @@
                     },
                     success: function (response) {
                         $('#items_table').html('')
-                        $.each(response.results, function(i, val) {
-                        $('#items_table').append(
-                        '<tr><td>'+val.date+'</td><td>'+val.name+'</td><td>'+val.amount+'</td><td>'+val.distance+'</td><tr/>')
-                       });
+                        $('#items_table').append(response);
                     },
                     error: function () {
                         alert('Error Occured');
