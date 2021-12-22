@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import JsonResponse
 from .models import *
 from django.core.paginator import Paginator
 
@@ -19,8 +18,13 @@ def index(request):
 
     if request.method == 'POST':
         page_no = request.POST.get('page_no', None)
-        results = list(obj_paginator.page(page_no).object_list.values('date', 'name', 'amount', 'distance'))
-        return JsonResponse({"results": results})
+        items = obj_paginator.page(page_no).object_list
+        context = {
+            'obj_paginator': obj_paginator,
+            'items': items,
+            'fields': item._meta.get_fields()
+        }
+        return render(request, 'table.html', context)
 
     return render(request, 'base.html', context)
 
